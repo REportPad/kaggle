@@ -8,12 +8,8 @@ df_test = pd.read_csv('C:/kaggle/tabular-playground-series-jul-2021/test.csv')
 #data split
 from sklearn.model_selection import train_test_split
 X=df_data.iloc[:,1:-3]
-y1=df_data.iloc[:,-3]
-y2=df_data.iloc[:,-2]
-y3=df_data.iloc[:,-1]
-X1_train, X1_test, y1_train, y1_test = train_test_split(X, y1, test_size=2247)
-X2_train, X2_test, y2_train, y2_test = train_test_split(X, y2, test_size=2247)
-X3_train, X3_test, y3_train, y3_test = train_test_split(X, y3, test_size=2247)
+y=df_data.iloc[:,-3:len(df_data)-1]
+X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=2247)
 
 #creating xgboost model
 from xgboost import XGBRegressor
