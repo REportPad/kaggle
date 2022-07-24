@@ -2,7 +2,10 @@
 import pandas as pd
 df_data = pd.read_csv('C:/kaggle/tabular-playground-series-aug-2021/train.csv')
 df_test = pd.read_csv('C:/kaggle/tabular-playground-series-aug-2021/test.csv')
-df_data.head()
+#df_data.head()
+#df_data.isnull().sum()
+#df_data.describe()
+#df_data.info()
 
 #data split
 from sklearn.model_selection import train_test_split
