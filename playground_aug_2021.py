@@ -15,7 +15,7 @@ X_test = df_test.iloc[:,1:len(df_test)-1]
 
 #creating xgboost model
 from xgboost import XGBRegressor
-xg_reg = XGBRegressor(tree_method='gpu_hist', gpu_id=0, max_depth=8,n_estimators=1000, eta=0.01)#Score: 0.19105
+xg_reg = XGBRegressor(tree_method='gpu_hist', gpu_id=0, max_depth=8,n_estimators=1000, eta=0.01)
 xg_reg.fit(X_train, y_train)
 y_pred = xg_reg.predict(X_test)
 
