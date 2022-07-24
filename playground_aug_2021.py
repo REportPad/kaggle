@@ -8,7 +8,6 @@ df_data.head()
 from sklearn.model_selection import train_test_split
 X=df_data.iloc[:,1:-1]
 y=df_data.iloc[:,-1]
-
 X_train=X
 y_train=y
 X_test = df_test.iloc[:,1:len(df_test)-1]
