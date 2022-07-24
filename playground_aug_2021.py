@@ -16,9 +16,18 @@ X_test = df_test.iloc[:,1:len(df_test)-1]
 from xgboost import XGBRegressor
 xg_reg = XGBRegressor(tree_method='gpu_hist', gpu_id=0, max_depth=8,n_estimators=1000, eta=0.01)
 xg_reg.fit(X_train, y_train)
-y_pred = xg_reg.predict(X_test)
+xg_pred = xg_reg.predict(X_test)
+
+#creating lightgbm model
+import lightgbm as lgb
+lgb_reg = lgb.LGBMRegressor()
+lgb_reg.fit(X_train, y_train)
+lgb_pred = lgb_reg.predict(X_test)
+
+#ensamble
+final_pred = 0.5*xg_pred + 0.5*lgb_pred
 
 #write submission file
 submission = pd.read_csv('C:/kaggle/tabular-playground-series-aug-2021/sample_submission.csv')
-submission['loss'] = y_pred
+submission['loss'] = final_pred
 submission.to_csv('C:/kaggle/tabular-playground-series-aug-2021/submission_20220724.csv', index=False)
