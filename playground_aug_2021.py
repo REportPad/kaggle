@@ -27,8 +27,14 @@ lgb_reg = lgb.LGBMRegressor()
 lgb_reg.fit(X_train, y_train)
 lgb_pred = lgb_reg.predict(X_test)
 
+#creating catboost model
+import catboost as cb
+cat_reg = cb.CatBoostRegressor(task_type='GPU')
+cat_reg.fit(X_train, y_train)
+cat_pred = cat_reg.predict(X_test)
+
 #ensamble
-final_pred = 0.5*xg_pred + 0.5*lgb_pred
+final_pred = (xg_pred + lgb_pred + cat_pred)/3
 
 #write submission file
 submission = pd.read_csv('C:/kaggle/tabular-playground-series-aug-2021/sample_submission.csv')
