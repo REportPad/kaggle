@@ -45,3 +45,18 @@ model = XGBRegressor()
 scores = cross_val_score(model, X, y, scoring='neg_mean_squared_error', cv=10)
 rmse = np.sqrt(-scores)
 print('rmse: ', rmse.mean())
+
+#searching best parameter
+from sklearn.model_selection import GridSearchCV
+params = {'max_depth':[None,2,3,4,5,6,7,8,9,10,20]}
+reg = XGBRegressor()
+grid_reg = GridSearchCV(reg, params, scoring='neg_mean_squared_error', cv=5, return_train_score=True, n_jobs=-1)
+grid_reg.fit(X_train, y_train)
+
+best_params = grid_reg.best_params_
+print('best_params: ', best_params)
+
+best_model = grid_reg.best_estimator_
+y_pred = best_model.predict(X_test)
+rmse_test = mean_squared_error(y_test, y_pred)**0.5
+print('test score: ', rmse_test)
