@@ -27,8 +27,16 @@ xg_reg = XGBRegressor()
 xg_reg.fit(X_train, y_train)
 y_pred = xg_reg.predict(X_test)
 
+#print rmse
 from sklearn.metrics import mean_squared_error
 import numpy as np
 mse = mean_squared_error(y_test, y_pred)
 rmse = np.sqrt(mse)
 print("RMSE: ", rmse)
+
+#using cross validation
+from sklearn.model_selection import cross_val_score
+model = XGBRegressor()
+scores = cross_val_score(model, X, y, scoring='neg_mean_squared_error', cv=10)
+rmse = np.sqrt(-scores)
+print('rmse: ', rmse.mean())
