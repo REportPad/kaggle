@@ -59,5 +59,5 @@ def grid_search(params, reg=XGBRegressor()):
     rmse_test = mean_squared_error(y_test, y_pred)**0.5
     print('test score: ', rmse_test)
     
-params = {'max_depth':[None,2,3,4,5,6,7,8,9,10,20],'min_sample_leaf':[1,2,4,8,16,32,64]}
+params = {'max_depth':[None,2,3,4,5,6,7,8,9,10,20],'min_samples_leaf':[1,2,4,8,16,32,64]}
 grid_search(params)
