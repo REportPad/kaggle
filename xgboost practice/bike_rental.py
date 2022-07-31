@@ -61,3 +61,33 @@ def grid_search(params, reg=XGBRegressor()):
     
 params = {'max_depth':[None,2,3,4,5,6,7,8,9,10,20],'min_samples_leaf':[1,2,4,8,16,32,64]}
 grid_search(params)
+
+
+#searching random parameter
+from sklearn.model_selection import RandomizedSearchCV
+from sklearn.metrics import accuracy_score
+
+def randomized_search_clf(params, runs=20, clf=XGBRegressor()):
+    rand_clf = RandomizedSearchCV(clf, params, n_iter=runs, cv=5, n_jobs=-1, random_state=2)
+    rand_clf.fit(X_train, y_train)
+    best_model = rand_clf.best_estimator_
+    best_score = rand_clf.best_score_
+    print('train score: ', best_score)
+    
+    y_pred = best_model.predict(X_test)
+    #accuracy = accuracy_score(y_test, y_pred)
+    #print('test score: ', accuracy)
+    return best_model
+
+randomized_search_clf(
+    params={
+        'criterion':['entropy', 'gini'],
+        'splitter':['random', 'best'],
+        'min_samples_split':[2, 3, 4, 5, 6, 8, 10],
+        'min_samples_leaf':[1, 0.01, 0.02, 0.03, 0.04],
+        'min_impurity_decrease':[0.0, 0.0005, 0.005, 0.05, 0.10, 0.15, 0.2],
+        'max_leaf_nodes':[10, 15, 20, 25, 30, 35, 40, 45, 50, None],
+        'max_features':['sqrt', 0.95, 0.90, 0.85, 0.80, 0.75, 0.70],
+        'max_depth':[None, 2,4,6,8],
+        'min_weight_fraction_leaf':[0.0, 0.0025, 0.005, 0.0075, 0.01, 0.05]
+    })
