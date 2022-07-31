@@ -1,6 +1,7 @@
 import pandas as pd
 df_bikes = pd.read_csv('C:/ML/xgboost_book/handson-gb-main/Chapter01/bike_rentals.csv')
 
+#data preprocessing
 df_bikes[df_bikes.isna().any(axis=1)]
 df_bikes['atemp'] = df_bikes['atemp'].interpolate()
 df_bikes['temp'] = df_bikes['temp'].interpolate()
@@ -13,15 +14,19 @@ df_bikes = df_bikes.drop('dteday', axis=1)
 df_bikes = df_bikes.drop(['casual', 'registered'], axis=1)
 #df_bikes.to_csv('C:/ML/xgboost_book/bike_rentals_after.csv', index=False)
 
+#X:input, y:output
 X=df_bikes.iloc[:,:-1]
 y=df_bikes.iloc[:,-1]
 
+#data split
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X,y,random_state=2)
 
+#ignore warning
 import warnings
 warnings.filterwarnings('ignore')
 
+#training model
 from xgboost import XGBRegressor
 xg_reg = XGBRegressor()
 xg_reg.fit(X_train, y_train)
